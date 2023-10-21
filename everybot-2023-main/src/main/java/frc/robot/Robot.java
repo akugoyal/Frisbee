@@ -34,10 +34,10 @@ public class Robot extends TimedRobot {
    * Change kBrushed to kBrushless if you are using NEO's.
    * Use the appropriate other class if you are using different controllers.
    */
-  CANSparkMax driveLeftSpark = new CANSparkMax(1, MotorType.kBrushed);
-  CANSparkMax driveRightSpark = new CANSparkMax(2, MotorType.kBrushed);
-  VictorSPX driveLeftVictor = new VictorSPX(3);
-  VictorSPX driveRightVictor = new VictorSPX(4);
+  // CANSparkMax driveLeftSpark = new CANSparkMax(1, MotorType.kBrushed);
+  // CANSparkMax driveRightSpark = new CANSparkMax(2, MotorType.kBrushed);
+  // VictorSPX driveLeftVictor = new VictorSPX(3);
+  // VictorSPX driveRightVictor = new VictorSPX(4);
 
   /*
    * Mechanism motor controller instances.
@@ -49,8 +49,8 @@ public class Robot extends TimedRobot {
    * The arm is a NEO on Everybud.
    * The intake is a NEO 550 on Everybud.
    */
-  CANSparkMax arm = new CANSparkMax(5, MotorType.kBrushless);
-  CANSparkMax intake = new CANSparkMax(6, MotorType.kBrushless);
+  // CANSparkMax arm = new CANSparkMax(5, MotorType.kBrushless);
+  // CANSparkMax intake = new CANSparkMax(6, MotorType.kBrushless);
 
   /**
    * The starter code uses the most generic joystick class.
