@@ -21,11 +21,11 @@ public class Robot extends TimedRobot {
   /*
    * Autonomous selection options.
    */
-  private static final String kNothingAuto = "do nothing";
-  private static final String kConeAuto = "cone";
-  private static final String kCubeAuto = "cube";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  // private static final String kNothingAuto = "do nothing";
+  // private static final String kConeAuto = "cone";
+  // private static final String kCubeAuto = "cube";
+  // private String m_autoSelected;
+  // private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   /*
    * Drive motor controller instances.
