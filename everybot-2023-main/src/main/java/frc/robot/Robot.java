@@ -4,18 +4,18 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+// import com.ctre.phoenix.motorcontrol.ControlMode;
+// import com.ctre.phoenix.motorcontrol.NeutralMode;
+// import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.Timer;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
   /*
@@ -34,8 +34,8 @@ public class Robot extends TimedRobot {
    * Change kBrushed to kBrushless if you are using NEO's.
    * Use the appropriate other class if you are using different controllers.
    */
-  // CANSparkMax driveLeftSpark = new CANSparkMax(1, MotorType.kBrushed);
-  // CANSparkMax driveRightSpark = new CANSparkMax(2, MotorType.kBrushed);
+  CANSparkMax shooterFrontSpark = new CANSparkMax(1, MotorType.kBrushed);
+  CANSparkMax shooterRearSpark = new CANSparkMax(2, MotorType.kBrushed);
   // VictorSPX driveLeftVictor = new VictorSPX(3);
   // VictorSPX driveRightVictor = new VictorSPX(4);
 
@@ -70,62 +70,62 @@ public class Robot extends TimedRobot {
   /**
    * How many amps the arm motor can use.
    */
-  static final int ARM_CURRENT_LIMIT_A = 20;
+  // static final int ARM_CURRENT_LIMIT_A = 20;
 
-  /**
-   * Percent output to run the arm up/down at
-   */
-  static final double ARM_OUTPUT_POWER = 0.4;
+  // /**
+  //  * Percent output to run the arm up/down at
+  //  */
+  // static final double ARM_OUTPUT_POWER = 0.4;
 
-  /**
-   * How many amps the intake can use while picking up
-   */
-  static final int INTAKE_CURRENT_LIMIT_A = 25;
+  // /**
+  //  * How many amps the intake can use while picking up
+  //  */
+  static final int SHOOTER_CURRENT_LIMIT_A = 25;
 
-  /**
-   * How many amps the intake can use while holding
-   */
-  static final int INTAKE_HOLD_CURRENT_LIMIT_A = 5;
+  // /**
+  //  * How many amps the intake can use while holding
+  //  */
+  // static final int INTAKE_HOLD_CURRENT_LIMIT_A = 5;
 
-  /**
-   * Percent output for intaking
-   */
-  static final double INTAKE_OUTPUT_POWER = 1.0;
+  // /**
+  //  * Percent output for intaking
+  //  */
+  // static final double INTAKE_OUTPUT_POWER = 1.0;
 
-  /**
-   * Percent output for holding
-   */
-  static final double INTAKE_HOLD_POWER = 0.07;
+  // /**
+  //  * Percent output for holding
+  //  */
+  // static final double INTAKE_HOLD_POWER = 0.07;
 
-  /**
-   * Time to extend or retract arm in auto
-   */
-  static final double ARM_EXTEND_TIME_S = 2.0;
+  // /**
+  //  * Time to extend or retract arm in auto
+  //  */
+  // static final double ARM_EXTEND_TIME_S = 2.0;
 
-  /**
-   * Time to throw game piece in auto
-   */
-  static final double AUTO_THROW_TIME_S = 0.375;
+  // /**
+  //  * Time to throw game piece in auto
+  //  */
+  // static final double AUTO_THROW_TIME_S = 0.375;
 
-  /**
-   * Time to drive back in auto
-   */
-  static final double AUTO_DRIVE_TIME = 6.0;
+  // /**
+  //  * Time to drive back in auto
+  //  */
+  // static final double AUTO_DRIVE_TIME = 6.0;
 
-  /**
-   * Speed to drive backwards in auto
-   */
-  static final double AUTO_DRIVE_SPEED = -0.25;
+  // /**
+  //  * Speed to drive backwards in auto
+  //  */
+  // static final double AUTO_DRIVE_SPEED = -0.25;
 
   /**
    * This method is run once when the robot is first started up.
    */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("do nothing", kNothingAuto);
-    m_chooser.addOption("cone and mobility", kConeAuto);
-    m_chooser.addOption("cube and mobility", kCubeAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    // m_chooser.setDefaultOption("do nothing", kNothingAuto);
+    // m_chooser.addOption("cone and mobility", kConeAuto);
+    // m_chooser.addOption("cube and mobility", kCubeAuto);
+    // SmartDashboard.putData("Auto choices", m_chooser);
 
     /*
      * You will need to change some of these from false to true.
@@ -134,21 +134,25 @@ public class Robot extends TimedRobot {
      * to the set() methods. Push the joystick forward. Reverse the motor
      * if it is going the wrong way. Repeat for the other 3 motors.
      */
-    driveLeftSpark.setInverted(false);
-    driveLeftVictor.setInverted(false);
-    driveRightSpark.setInverted(false);
-    driveRightVictor.setInverted(false);
+    shooterFrontSpark.setInverted(false);
+    shooterRearSpark.setInverted(false);
+    shooterFrontSpark.setSmartCurrentLimit(SHOOTER_CURRENT_LIMIT_A);
+    shooterRearSpark.setSmartCurrentLimit(SHOOTER_CURRENT_LIMIT_A);
+    // driveLeftSpark.setInverted(false);
+    // driveLeftVictor.setInverted(false);
+    // driveRightSpark.setInverted(false);
+    // driveRightVictor.setInverted(false);
 
     /*
      * Set the arm and intake to brake mode to help hold position.
      * If either one is reversed, change that here too. Arm out is defined
      * as positive, arm in is negative.
      */
-    arm.setInverted(true);
-    arm.setIdleMode(IdleMode.kBrake);
-    arm.setSmartCurrentLimit(ARM_CURRENT_LIMIT_A);
-    intake.setInverted(false);
-    intake.setIdleMode(IdleMode.kBrake);
+    // arm.setInverted(true);
+    // arm.setIdleMode(IdleMode.kBrake);
+    // arm.setSmartCurrentLimit(ARM_CURRENT_LIMIT_A);
+    // intake.setInverted(false);
+    // intake.setIdleMode(IdleMode.kBrake);
   }
 
   /**
@@ -159,38 +163,38 @@ public class Robot extends TimedRobot {
    * @param turn    Desired turning speed. Positive is counter clockwise from
    *                above.
    */
-  public void setDriveMotors(double forward, double turn) {
-    SmartDashboard.putNumber("drive forward power (%)", forward);
-    SmartDashboard.putNumber("drive turn power (%)", turn);
+  // public void setDriveMotors(double forward, double turn) {
+  //   SmartDashboard.putNumber("drive forward power (%)", forward);
+  //   SmartDashboard.putNumber("drive turn power (%)", turn);
 
-    /*
-     * positive turn = counter clockwise, so the left side goes backwards
-     */
-    double left = forward - turn;
-    double right = forward + turn;
+  //   /*
+  //    * positive turn = counter clockwise, so the left side goes backwards
+  //    */
+  //   double left = forward - turn;
+  //   double right = forward + turn;
 
-    SmartDashboard.putNumber("drive left power (%)", left);
-    SmartDashboard.putNumber("drive right power (%)", right);
+  //   SmartDashboard.putNumber("drive left power (%)", left);
+  //   SmartDashboard.putNumber("drive right power (%)", right);
 
-    // see note above in robotInit about commenting these out one by one to set
-    // directions.
-    driveLeftSpark.set(left);
-    driveLeftVictor.set(ControlMode.PercentOutput, left);
-    driveRightSpark.set(right);
-    driveRightVictor.set(ControlMode.PercentOutput, right);
-  }
+  //   // see note above in robotInit about commenting these out one by one to set
+  //   // directions.
+  //   driveLeftSpark.set(left);
+  //   driveLeftVictor.set(ControlMode.PercentOutput, left);
+  //   driveRightSpark.set(right);
+  //   driveRightVictor.set(ControlMode.PercentOutput, right);
+  // }
 
   /**
    * Set the arm output power. Positive is out, negative is in.
    * 
    * @param percent
    */
-  public void setArmMotor(double percent) {
-    arm.set(percent);
-    SmartDashboard.putNumber("arm power (%)", percent);
-    SmartDashboard.putNumber("arm motor current (amps)", arm.getOutputCurrent());
-    SmartDashboard.putNumber("arm motor temperature (C)", arm.getMotorTemperature());
-  }
+  // public void setArmMotor(double percent) {
+  //   arm.set(percent);
+  //   SmartDashboard.putNumber("arm power (%)", percent);
+  //   SmartDashboard.putNumber("arm motor current (amps)", arm.getOutputCurrent());
+  //   SmartDashboard.putNumber("arm motor temperature (C)", arm.getMotorTemperature());
+  // }
 
   /**
    * Set the arm output power.
@@ -198,13 +202,13 @@ public class Robot extends TimedRobot {
    * @param percent desired speed
    * @param amps current limit
    */
-  public void setIntakeMotor(double percent, int amps) {
-    intake.set(percent);
-    intake.setSmartCurrentLimit(amps);
-    SmartDashboard.putNumber("intake power (%)", percent);
-    SmartDashboard.putNumber("intake motor current (amps)", intake.getOutputCurrent());
-    SmartDashboard.putNumber("intake motor temperature (C)", intake.getMotorTemperature());
-  }
+  // public void setIntakeMotor(double percent, int amps) {
+  //   intake.set(percent);
+  //   intake.setSmartCurrentLimit(amps);
+  //   SmartDashboard.putNumber("intake power (%)", percent);
+  //   SmartDashboard.putNumber("intake motor current (amps)", intake.getOutputCurrent());
+  //   SmartDashboard.putNumber("intake motor temperature (C)", intake.getMotorTemperature());
+  // }
 
   /**
    * This method is called every 20 ms, no matter the mode. It runs after
@@ -212,126 +216,129 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putNumber("Time (seconds)", Timer.getFPGATimestamp());
+    // SmartDashboard.putNumber("Time (seconds)", Timer.getFPGATimestamp());
   }
 
-  double autonomousStartTime;
-  double autonomousIntakePower;
+  // double autonomousStartTime;
+  // double autonomousIntakePower;
 
-  @Override
-  public void autonomousInit() {
-    driveLeftSpark.setIdleMode(IdleMode.kBrake);
-    driveLeftVictor.setNeutralMode(NeutralMode.Brake);
-    driveRightSpark.setIdleMode(IdleMode.kBrake);
-    driveRightVictor.setNeutralMode(NeutralMode.Brake);
+  // @Override
+  // public void autonomousInit() {
+  //   driveLeftSpark.setIdleMode(IdleMode.kBrake);
+  //   driveLeftVictor.setNeutralMode(NeutralMode.Brake);
+  //   driveRightSpark.setIdleMode(IdleMode.kBrake);
+  //   driveRightVictor.setNeutralMode(NeutralMode.Brake);
 
-    m_autoSelected = m_chooser.getSelected();
-    System.out.println("Auto selected: " + m_autoSelected);
+  //   m_autoSelected = m_chooser.getSelected();
+  //   System.out.println("Auto selected: " + m_autoSelected);
 
-    if (m_autoSelected == kConeAuto) {
-      autonomousIntakePower = INTAKE_OUTPUT_POWER;
-    } else if (m_autoSelected == kCubeAuto) {
-      autonomousIntakePower = -INTAKE_OUTPUT_POWER;
-    }
+  //   if (m_autoSelected == kConeAuto) {
+  //     autonomousIntakePower = INTAKE_OUTPUT_POWER;
+  //   } else if (m_autoSelected == kCubeAuto) {
+  //     autonomousIntakePower = -INTAKE_OUTPUT_POWER;
+  //   }
 
-    autonomousStartTime = Timer.getFPGATimestamp();
-  }
+  //   autonomousStartTime = Timer.getFPGATimestamp();
+  // }
 
-  @Override
-  public void autonomousPeriodic() {
-    if (m_autoSelected == kNothingAuto) {
-      setArmMotor(0.0);
-      setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
-      setDriveMotors(0.0, 0.0);
-      return;
-    }
+  // @Override
+  // public void autonomousPeriodic() {
+  //   if (m_autoSelected == kNothingAuto) {
+  //     setArmMotor(0.0);
+  //     setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
+  //     setDriveMotors(0.0, 0.0);
+  //     return;
+  //   }
 
-    double timeElapsed = Timer.getFPGATimestamp() - autonomousStartTime;
+  //   double timeElapsed = Timer.getFPGATimestamp() - autonomousStartTime;
 
-    if (timeElapsed < ARM_EXTEND_TIME_S) {
-      setArmMotor(ARM_OUTPUT_POWER);
-      setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
-      setDriveMotors(0.0, 0.0);
-    } else if (timeElapsed < ARM_EXTEND_TIME_S + AUTO_THROW_TIME_S) {
-      setArmMotor(0.0);
-      setIntakeMotor(autonomousIntakePower, INTAKE_CURRENT_LIMIT_A);
-      setDriveMotors(0.0, 0.0);
-    } else if (timeElapsed < ARM_EXTEND_TIME_S + AUTO_THROW_TIME_S + ARM_EXTEND_TIME_S) {
-      setArmMotor(-ARM_OUTPUT_POWER);
-      setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
-      setDriveMotors(0.0, 0.0);
-    } else if (timeElapsed < ARM_EXTEND_TIME_S + AUTO_THROW_TIME_S + ARM_EXTEND_TIME_S + AUTO_DRIVE_TIME) {
-      setArmMotor(0.0);
-      setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
-      setDriveMotors(AUTO_DRIVE_SPEED, 0.0);
-    } else {
-      setArmMotor(0.0);
-      setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
-      setDriveMotors(0.0, 0.0);
-    }
-  }
+  //   if (timeElapsed < ARM_EXTEND_TIME_S) {
+  //     setArmMotor(ARM_OUTPUT_POWER);
+  //     setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
+  //     setDriveMotors(0.0, 0.0);
+  //   } else if (timeElapsed < ARM_EXTEND_TIME_S + AUTO_THROW_TIME_S) {
+  //     setArmMotor(0.0);
+  //     setIntakeMotor(autonomousIntakePower, INTAKE_CURRENT_LIMIT_A);
+  //     setDriveMotors(0.0, 0.0);
+  //   } else if (timeElapsed < ARM_EXTEND_TIME_S + AUTO_THROW_TIME_S + ARM_EXTEND_TIME_S) {
+  //     setArmMotor(-ARM_OUTPUT_POWER);
+  //     setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
+  //     setDriveMotors(0.0, 0.0);
+  //   } else if (timeElapsed < ARM_EXTEND_TIME_S + AUTO_THROW_TIME_S + ARM_EXTEND_TIME_S + AUTO_DRIVE_TIME) {
+  //     setArmMotor(0.0);
+  //     setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
+  //     setDriveMotors(AUTO_DRIVE_SPEED, 0.0);
+  //   } else {
+  //     setArmMotor(0.0);
+  //     setIntakeMotor(0.0, INTAKE_CURRENT_LIMIT_A);
+  //     setDriveMotors(0.0, 0.0);
+  //   }
+  // }
 
   /**
    * Used to remember the last game piece picked up to apply some holding power.
    */
-  static final int CONE = 1;
-  static final int CUBE = 2;
-  static final int NOTHING = 3;
-  int lastGamePiece;
+  // static final int CONE = 1;
+  // static final int CUBE = 2;
+  // static final int NOTHING = 3;
+  // int lastGamePiece;
 
   @Override
   public void teleopInit() {
-    driveLeftSpark.setIdleMode(IdleMode.kCoast);
-    driveLeftVictor.setNeutralMode(NeutralMode.Coast);
-    driveRightSpark.setIdleMode(IdleMode.kCoast);
-    driveRightVictor.setNeutralMode(NeutralMode.Coast);
+    shooterFrontSpark.setIdleMode(IdleMode.kCoast);
+    shooterRearSpark.setIdleMode(IdleMode.kCoast);
+    // driveRightSpark.setIdleMode(IdleMode.kCoast);
+    // driveRightVictor.setNeutralMode(NeutralMode.Coast);
 
-    lastGamePiece = NOTHING;
+    // lastGamePiece = NOTHING;
   }
 
   @Override
   public void teleopPeriodic() {
-    double armPower;
-    if (j.getRawButton(7)) {
-      // lower the arm
-      armPower = -ARM_OUTPUT_POWER;
-    } else if (j.getRawButton(5)) {
-      // raise the arm
-      armPower = ARM_OUTPUT_POWER;
-    } else {
-      // do nothing and let it sit where it is
-      armPower = 0.0;
-    }
-    setArmMotor(armPower);
+    double output = -j.getRawAxis(0);
+    shooterFrontSpark.set(output);
+    shooterRearSpark.set(output);
+    // double armPower;
+    // if (j.getRawButton(7)) {
+    //   // lower the arm
+    //   armPower = -ARM_OUTPUT_POWER;
+    // } else if (j.getRawButton(5)) {
+    //   // raise the arm
+    //   armPower = ARM_OUTPUT_POWER;
+    // } else {
+    //   // do nothing and let it sit where it is
+    //   armPower = 0.0;
+    // }
+    // setArmMotor(armPower);
   
-    double intakePower;
-    int intakeAmps;
-    if (j.getRawButton(8)) {
-      // cube in or cone out
-      intakePower = INTAKE_OUTPUT_POWER;
-      intakeAmps = INTAKE_CURRENT_LIMIT_A;
-      lastGamePiece = CUBE;
-    } else if (j.getRawButton(6)) {
-      // cone in or cube out
-      intakePower = -INTAKE_OUTPUT_POWER;
-      intakeAmps = INTAKE_CURRENT_LIMIT_A;
-      lastGamePiece = CONE;
-    } else if (lastGamePiece == CUBE) {
-      intakePower = INTAKE_HOLD_POWER;
-      intakeAmps = INTAKE_HOLD_CURRENT_LIMIT_A;
-    } else if (lastGamePiece == CONE) {
-      intakePower = -INTAKE_HOLD_POWER;
-      intakeAmps = INTAKE_HOLD_CURRENT_LIMIT_A;
-    } else {
-      intakePower = 0.0;
-      intakeAmps = 0;
-    }
-    setIntakeMotor(intakePower, intakeAmps);
+    // double intakePower;
+    // int intakeAmps;
+    // if (j.getRawButton(8)) {
+    //   // cube in or cone out
+    //   intakePower = INTAKE_OUTPUT_POWER;
+    //   intakeAmps = INTAKE_CURRENT_LIMIT_A;
+    //   lastGamePiece = CUBE;
+    // } else if (j.getRawButton(6)) {
+    //   // cone in or cube out
+    //   intakePower = -INTAKE_OUTPUT_POWER;
+    //   intakeAmps = INTAKE_CURRENT_LIMIT_A;
+    //   lastGamePiece = CONE;
+    // } else if (lastGamePiece == CUBE) {
+    //   intakePower = INTAKE_HOLD_POWER;
+    //   intakeAmps = INTAKE_HOLD_CURRENT_LIMIT_A;
+    // } else if (lastGamePiece == CONE) {
+    //   intakePower = -INTAKE_HOLD_POWER;
+    //   intakeAmps = INTAKE_HOLD_CURRENT_LIMIT_A;
+    // } else {
+    //   intakePower = 0.0;
+    //   intakeAmps = 0;
+    // }
+    // setIntakeMotor(intakePower, intakeAmps);
 
-    /*
-     * Negative signs here because the values from the analog sticks are backwards
-     * from what we want. Forward returns a negative when we want it positive.
-     */
-    setDriveMotors(-j.getRawAxis(1), -j.getRawAxis(2));
+    // /*
+    //  * Negative signs here because the values from the analog sticks are backwards
+    //  * from what we want. Forward returns a negative when we want it positive.
+    //  */
+    // setDriveMotors(-j.getRawAxis(1), -j.getRawAxis(2));
   }
 }
