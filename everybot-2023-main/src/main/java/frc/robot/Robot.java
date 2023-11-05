@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 // import com.ctre.phoenix.motorcontrol.NeutralMode;
-// import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+// import com.revrobotics.CANSparkMax;
+// import com.revrobotics.CANSparkMax.IdleMode;
+// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -34,8 +36,8 @@ public class Robot extends TimedRobot {
    * Change kBrushed to kBrushless if you are using NEO's.
    * Use the appropriate other class if you are using different controllers.
    */
-  CANSparkMax shooterFrontSpark = new CANSparkMax(1, MotorType.kBrushed);
-  CANSparkMax shooterRearSpark = new CANSparkMax(2, MotorType.kBrushed);
+  VictorSPX shooterFront = new VictorSPX(1);
+  VictorSPX shooterRear = new VictorSPX(2);
   // VictorSPX driveLeftVictor = new VictorSPX(3);
   // VictorSPX driveRightVictor = new VictorSPX(4);
 
@@ -134,10 +136,8 @@ public class Robot extends TimedRobot {
      * to the set() methods. Push the joystick forward. Reverse the motor
      * if it is going the wrong way. Repeat for the other 3 motors.
      */
-    shooterFrontSpark.setInverted(false);
-    shooterRearSpark.setInverted(false);
-    shooterFrontSpark.setSmartCurrentLimit(SHOOTER_CURRENT_LIMIT_A);
-    shooterRearSpark.setSmartCurrentLimit(SHOOTER_CURRENT_LIMIT_A);
+    shooterFront.setInverted(false);
+    shooterRear.setInverted(false);
     // driveLeftSpark.setInverted(false);
     // driveLeftVictor.setInverted(false);
     // driveRightSpark.setInverted(false);
@@ -285,8 +285,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    shooterFrontSpark.setIdleMode(IdleMode.kCoast);
-    shooterRearSpark.setIdleMode(IdleMode.kCoast);
+    shooterFront.setNeutralMode(NeutralMode.Coast);
+    shooterRear.setNeutralMode(NeutralMode.Coast);
+    // shooterRear.setIdleMode(IdleMode.kCoast);
     // driveRightSpark.setIdleMode(IdleMode.kCoast);
     // driveRightVictor.setNeutralMode(NeutralMode.Coast);
 
@@ -296,8 +297,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     double output = -j.getRawAxis(0);
-    shooterFrontSpark.set(output);
-    shooterRearSpark.set(output);
+    shooterFront.set(VictorSPXControlMode.PercentOutput, output);
+    shooterRear.follow(shooterFront);
     // double armPower;
     // if (j.getRawButton(7)) {
     //   // lower the arm
